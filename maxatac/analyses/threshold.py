@@ -78,7 +78,7 @@ def run_thresholding(args):
         df['GoldStandard'] = OUT[0][i][1][:bin_count].tolist()
 
         gs_bins = OUT[0][i][2]
-        DF = DF.append(df)
+        DF = pd.concat([DF, df], ignore_index = True)
         total_gs_bins.append(gs_bins)
     
     
@@ -98,7 +98,7 @@ def run_thresholding(args):
     #Extend last row of entries to threshold of 1
     new_row = PR_CURVE_DF.tail(n=1)
     new_row.Threshold = 1
-    PR_CURVE_DF = PR_CURVE_DF.append(new_row)
+    PR_CURVE_DF = pd.concat([PR_CURVE_DF, new_row], ignore_index = True)
     
     # total_gs_bins: Total GS bins across for each CT
     PR_CURVE_DF["Total_Avg_GoldStandard_Bins"] = int(np.mean(total_gs_bins))
